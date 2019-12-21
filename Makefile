@@ -3,6 +3,7 @@ SRCS		= ft_printf.c \
 		  ./srcs/ft_printf_utils2.c \
 		  ./srcs/ft_printf_utils3.c \
 		  ./srcs/ft_precision.c \
+		  ./srcs/ft_precision2.c \
 		  ./srcs/ft_parser.c \
 
 OBJS		= ${SRCS:.c=.o}

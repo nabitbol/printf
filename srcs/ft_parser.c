@@ -6,7 +6,7 @@
 /*   By: nabitbol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 11:10:32 by nabitbol          #+#    #+#             */
-/*   Updated: 2019/12/14 13:55:13 by nabitbol         ###   ########.fr       */
+/*   Updated: 2019/12/21 18:28:11 by nabitbol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_convert	*init_convert(void)
 	conv_list->integer = 0;
 	conv_list->u_integer = 0;
 	conv_list->point = 0;
+	conv_list->point1 = 0;
 	conv_list->zero = 0;
 	conv_list->etoile = 0;
 	conv_list->moins = 0;
@@ -58,7 +59,7 @@ void		ft_value_giver(const char **str, int *count, va_list ap)
 
 	ptr = init_convert();
 	(*str)++;
-	ft_check_precision(str, ptr, ap, count);
+	ft_check_prec(str, ptr, ap, count);
 	ptr->flag = **str;
 	if (ptr->flag == 's')
 		ptr->string = va_arg(ap, char *);
@@ -70,6 +71,6 @@ void		ft_value_giver(const char **str, int *count, va_list ap)
 		ptr->integer = va_arg(ap, int);
 	else if (ptr->flag == 's' && ptr->string == NULL)
 		ptr->string = "(null)";
-	print_precision(ptr, count, str);
-	ft_check_flags(ptr, count);	
+	print_prec(ptr, str, count);
+	ft_check_flags(ptr, count);
 }

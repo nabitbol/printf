@@ -6,7 +6,7 @@
 /*   By: nabitbol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 09:21:40 by nabitbol          #+#    #+#             */
-/*   Updated: 2019/12/14 13:19:33 by nabitbol         ###   ########.fr       */
+/*   Updated: 2019/12/21 18:28:05 by nabitbol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,91 +26,88 @@ int	ft_isflag(char c)
 	return (1);
 }
 
-void	ft_check_precision(const char **str, t_convert *ptr, va_list ap, int *count)
+void	ft_check_prec(const char **str, t_convert *ptr, va_list ap, int *count)
 {
-
 	while (ft_isflag(**str) == 1)
 	{
-		if (is_digit(**str) == 1)
+		if (*str[0] == '0')
+			ptr->zero = 1;
+		else if (is_digit(**str) == 1)
 			ptr->num = (ptr->num * 10) + (**str - '0');
 		else if (**str == '-')
 			ptr->moins = 1;
-		else if (**str == '0')
-			ptr->zero = 1;
 		else if (**str == '.')
 			ptr->point = 1;
 		else if (**str == '*')
 			ptr->etoile = va_arg(ap, int);
 		if (**str == '*' && ptr->point == 1)
 			ptr->p = va_arg(ap, int);
+		else if (is_digit(**str) == 1 && ptr->point1 == 1)
+			ptr->p = (ptr->p * 10) + (**str - '0');
 		else if (is_digit(**str) == 1 && ptr->point == 1)
-			ptr->p = (ptr->num * 10) + (**str - '0');
-		if (**str != '.' && **str != '*' && **str != '-' && **str != '0' && is_digit(**str) == 0)
+			ptr->p = (ptr->p * 10) + (**str - '0');
+		if (**str != '.' && **str != '*' && **str != '-' && **str != '0' &&
+				is_digit(**str) == 0)
 			ft_putchar_count(**str, count);
 		(*str)++;
 	}
 }
 
-void	print_precision(t_convert *ptr, int *count, const char **str)
+void		print_prec(t_convert *ptr, const char **str, int *count)
 {
-	int	len;
-	int	d;
-	char	*s;
+	if ((ptr->moins == 0 && ptr->zero == 0) || (ptr->zero == 1 && **str == 's') ||
+	(ptr->point == 1 && (ptr->p > ptr->num)))
+		print_espace(ptr, str, count);
+	else if (ptr->zero == 1 && ptr->moins == 0 && **str != 'c'  && **str != 's'&&
+	ptr->point == 0)
+		print_zero(ptr, str, count);
+	else if (ptr->moins == 0 && ptr->point == 1 && **str!= 's')
+		printf_eszero(ptr, str, count);
+}
 
-	if (**str == 'd' || **str == 'u' || **str == 'i' || **str == 'x' || **str == 'X')
-	{
-		d = ptr->integer;
-		len = ft_strlen_int(d);
-		while (ptr->num > len)
-		{
-			ft_putchar_count(' ',count);
-			ptr->num--;
-		}
-	}
+void		print_espace(t_convert *ptr, const char **str, int *count)
+{
+	int				len;
+	int				n;
+
+	n = 0;
+	len = 0;
+	if (**str == 'd' || **str == 'i')
+		len = counter(ptr->integer, 10);
 	else if (**str == 's')
+		len = ft_strlen(ptr->string);
+	else if (**str == 'x' || **str == 'X')
+		len = counter(ptr->u_integer, 16);
+	else if (**str == 'u')
+		len = counter(ptr->u_integer, 10);
+	while ((ptr->num - len) > n)
 	{
-		s = ptr->string;
-		len = ft_strlen(s);
-		while (ptr->num > len)
-		{
-			ft_putchar_count(' ', count);
-			ptr->num--;
-		}
+		ft_putchar_count(' ', count);
+		n++;
 	}
 }
 
 
-void	ft_zero_point(t_convert *ptr, int *count, int len, const char **str)
+void	print_zero(t_convert *ptr, const char **str, int *count)
 {
-	if (ptr->zero == 1 && ptr->num != 0)
+	int				len;
+	int				n;
+
+	n = 0;
+	len = 0;
+	if (**str == 'd' || **str == 'i')
+		len = counter(ptr->integer, 10);
+	else if (**str == 's')
+		len = ft_strlen(ptr->string);
+	else if (**str == 'x' || **str == 'X')
+		len = counter(ptr->u_integer, 16);
+	else if (**str == 'u')
+		len = counter(ptr->u_integer, 10);
+	else if (**str == 'p')
+		len = counter(ptr->u_integer, 16) + 2;
+	while (ptr->num - len > n)
 	{
-		while (ptr->num > len)
-		{
-			ft_putchar_count('0',  count);
-			ptr->num--;
-		}
-	}
-	else if (ptr->num != 0 && ptr->point == 1 && ptr->p == 0 && **str != 's')
-	{
-		while (ptr->num > len)
-		{
-			ft_putchar_count(' ', count);
-			ptr->num--;
-		}
-	}
-	else if (ptr->num != 0 && ptr->point == 1 && ptr->p != 0 && **str != 's')
-	{
-		while ((ptr->num > len) && (ptr->num > ptr->p))
-		{
-			ft_putchar_count(' ', count);
-			ptr->num--;
-		}
-		while (ptr->p > len)
-		{
-			ft_putchar_count(' ', count);
-			ptr->p--;
-		}
+		ft_putchar_count('0', count);
+		n++;
 	}
 }
-
-

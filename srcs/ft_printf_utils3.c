@@ -6,7 +6,7 @@
 /*   By: nabitbol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 09:22:15 by nabitbol          #+#    #+#             */
-/*   Updated: 2019/12/14 09:22:16 by nabitbol         ###   ########.fr       */
+/*   Updated: 2019/12/21 18:17:29 by nabitbol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,17 @@ size_t		ft_strlen(const char *s)
 	return (n);
 }
 
-size_t		ft_strlen_int(int d)
+size_t		counter(long int d, int div)
 {
-	int 	n;
+	int n;
 
 	n = 0;
-	while ((d / 10) > 0)
+	if (d == 0)
+		return (1);
+	while (d != 0)
 	{
-		d = (d / 10);
+		d = (d / div);
 		n++;
 	}
-	return (n + 1);
+	return (n);
 }
