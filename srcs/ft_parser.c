@@ -22,19 +22,25 @@ t_convert	*init_convert(void)
 	conv_list->integer = 0;
 	conv_list->u_integer = 0;
 	conv_list->point = 0;
-	conv_list->point1 = 0;
 	conv_list->zero = 0;
-	conv_list->etoile = 0;
+	conv_list->point1 = 0;
 	conv_list->moins = 0;
 	conv_list->p = 0;
 	conv_list->num = 0;
 	return (conv_list);
 }
 
+void		negatif(t_convert *ptr, const char **str, int *count)
+{
+	if (ptr->moins == 1)
+		print_espace(ptr, str, count);
+	free(ptr);
+}
+
 void		ft_check_flags(t_convert *ptr, int *count)	
 {
 	if (ptr->flag == 'c')
-		ft_putchar_count(ptr->chara, count);
+		ft_putchar_count(ptr->integer, count);
 	else if (ptr->flag == 'd' || ptr->flag == 'i')
 		ft_putnbr_count(ptr->integer, count);
 	else if (ptr->flag == 'p')
@@ -45,11 +51,10 @@ void		ft_check_flags(t_convert *ptr, int *count)
 		ft_putnbr_hexa_small(ptr->u_integer, count);
 	else if (ptr->flag == 'X')
 		ft_putnbr_hexa(ptr->u_integer, count);
-	else if (ptr->flag == 's')
+	else if (ptr->flag == 's' && ptr->point == 0)
 		ft_putstr_count(ptr->string, count);
 	else if (ptr->flag == '%')
 		ft_putchar_count('%', count);
-	free(ptr);
 }
 
 
@@ -61,6 +66,11 @@ void		ft_value_giver(const char **str, int *count, va_list ap)
 	(*str)++;
 	ft_check_prec(str, ptr, ap, count);
 	ptr->flag = **str;
+	if (ptr->num < 0)
+	{
+		ptr->moins = 1;
+		ptr->num = -(ptr->num);
+	}
 	if (ptr->flag == 's')
 		ptr->string = va_arg(ap, char *);
 	else if (ptr->flag == 'p')
@@ -72,5 +82,7 @@ void		ft_value_giver(const char **str, int *count, va_list ap)
 	else if (ptr->flag == 's' && ptr->string == NULL)
 		ptr->string = "(null)";
 	print_prec(ptr, str, count);
-	ft_check_flags(ptr, count);
+	if (check_point(ptr, str) == 0)
+		ft_check_flags(ptr, count);
+	negatif(ptr, str, count);
 }

@@ -18,24 +18,25 @@ void	ft_putchar(char c)
 	write (1, &c, 1);
 }
 
-void	ft_putnbr_count(long nbr, int *count)
+void	ft_putnbr_count(long int nbr, int *count)
 {
 	unsigned long  nb;
 
-	nb = nbr;
 	if (nbr < 0)
 	{
 		ft_putchar('-');
-		nb = nbr * -1;
+		nb = -(nbr);
 		*count += 1;
 	}
-	if (nbr >= 10)
+	else 
+		nb = nbr;
+	if (nb >= 10)
 		ft_putnbr_count((nb / 10), count);
 	*count += 1;
 	ft_putchar((nb % 10) + '0');
 }
 
-void	ft_putnbr_hexa(long nbr, int *count)
+void	ft_putnbr_hexa(long int nbr, int *count)
 {
 	char		*str;
 	unsigned long	nb;
@@ -48,7 +49,7 @@ void	ft_putnbr_hexa(long nbr, int *count)
 	*count += 1;
 }
 
-void	ft_putnbr_hexa_small(long nbr, int *count)
+void	ft_putnbr_hexa_small(long int nbr, int *count)
 {
 	char 		*str;
 	unsigned long	nb;
@@ -66,6 +67,11 @@ void	ft_putadrr(char *str, int *count)
 	unsigned long int d;
 
 	d = (unsigned long int)str;
-	ft_putstr_count("0x", count);
-	ft_putnbr_hexa_small(d, count);
+	if (str == NULL)
+		ft_putstr_count("(nill)", count);
+	else
+	{	
+		ft_putstr_count("0x", count);
+		ft_putnbr_hexa_small(d, count);
+	}
 }

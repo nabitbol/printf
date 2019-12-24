@@ -12,30 +12,45 @@
 
 #include "../ft_printf.h"
 
-void	printf_eszero(t_convert *ptr, const char **str, int *count)
+int	print_negatifz(t_convert *ptr, int *count, int nb_zero, int *len)
 {
-	int				len;
-	int				n;
+	ft_putchar_count('-', count);
+	ptr->integer = -(ptr->integer);
+		len += 1;
+	if (ptr->moins == 1)
+		ptr->num -=1;
+	return (nb_zero);
+}
+
+void	prec_s(t_convert *ptr, int *count)
+{
+	int	n;
+	char	*s;
 
 	n = 0;
-	len = 0;
-	if (**str == 'd' || **str == 'i')
-		len = counter(ptr->integer, 10);
-	else if (**str == 's')
-		len = ft_strlen(ptr->string);
-	else if (**str == 'x' || **str == 'X')
-		len = counter(ptr->u_integer, 16);
-	else if (**str == 'u')
-		len = counter(ptr->u_integer, 10);
-	while ((ptr->num > ptr->p) && (ptr->num - len) > n)
+	s = ptr->string;
+	while (s[n] &&  n < ptr->p)
 	{
-		ft_putchar_count(' ', count);
+		ft_putchar_count(s[n], count);
 		n++;
 	}
-	n = 0;
-	while ((ptr->p - len) > n)
-	{
-		ft_putchar_count('0', count);
-		n++;
-	}
+}
+
+
+int		check_point(t_convert *ptr, const char **str)
+{
+	if ((**str == 'd' || **str == 'i') && ptr->p == 0 &&
+		ptr->integer == 0 && ptr->point == 1)
+		return (1);
+	if ((**str == 'd' || **str == 'i') && ptr->point == 0 &&
+		ptr->integer == 0  && ptr->point == 1)
+		return (1);
+	else if (ptr->p == 0 && ptr->u_integer == 0 && ptr->point == 1 &&
+		(**str == 'x' || **str == 'X' || **str == 'u'))
+		return (1);
+	else if (ptr->point1 == 0 && ptr->u_integer == 0 && ptr->point == 1 &&
+		(**str == 'x' || **str == 'X' || **str == 'u'))
+		return (1);
+	else 
+		return (0);
 }
