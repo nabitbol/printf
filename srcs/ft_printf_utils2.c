@@ -62,16 +62,11 @@ void	ft_putnbr_hexa_small(long int nbr, int *count)
 	*count += 1;
 }
 
-void	ft_putadrr(char *str, int *count)
+void	ft_putadrr(t_convert *ptr, va_list ap)
 {
 	unsigned long int d;
 
-	d = (unsigned long int)str;
-	if (str == NULL)
-		ft_putstr_count("(nill)", count);
-	else
-	{	
-		ft_putstr_count("0x", count);
-		ft_putnbr_hexa_small(d, count);
-	}
+	ptr->string = va_arg(ap, char *);
+	d = (unsigned long int)(ptr->string);
+	ptr->u_integer = d;
 }

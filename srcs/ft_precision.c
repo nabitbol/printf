@@ -74,6 +74,10 @@ void		print_prec(t_convert *ptr, const char **str, int *count)
 		prec_s(ptr, count);
 	else if (ptr->point == 1 && **str != '%' && **str != 'c')
 		print_zero(ptr, str, count);
+	if (**str == 'p' && ptr->u_integer == 0)
+		ft_putstr_count("(nil)", count);
+	else if (**str == 'p')
+		ft_putstr_count("0x", count);
 }
 
 void		print_espace(t_convert *ptr, const char **str, int *count)
@@ -89,6 +93,8 @@ void		print_espace(t_convert *ptr, const char **str, int *count)
 		len = counter(ptr->integer, 10);
 	else if (**str == 's')
 		len = ft_strlen(ptr->string);
+	else if (**str == 'p')
+		len = counter(ptr->u_integer, 16) + 2;
 	else if (**str == 'x' || **str == 'X')
 		len = counter(ptr->u_integer, 16);
 	else if (**str == 'u')
@@ -139,5 +145,7 @@ int		print_espace2(t_convert *ptr, const char **str, int len)
 		len = (ptr->p > len) ? ptr->p : len;
 	if (ptr->integer < 0)
 		len += 1;
+	if (**str == 'p' && ptr->u_integer == 0)
+		len += 2;
 	return (len);
 }

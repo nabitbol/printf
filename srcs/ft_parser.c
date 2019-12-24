@@ -43,11 +43,9 @@ void		ft_check_flags(t_convert *ptr, int *count)
 		ft_putchar_count(ptr->integer, count);
 	else if (ptr->flag == 'd' || ptr->flag == 'i')
 		ft_putnbr_count(ptr->integer, count);
-	else if (ptr->flag == 'p')
-		ft_putadrr(ptr->string, count);
 	else if (ptr->flag == 'u')
 		ft_putnbr_count(ptr->u_integer, count);
-	else if (ptr->flag == 'x')
+	else if (ptr->flag == 'x' || (ptr->flag == 'p' && ptr->u_integer != 0))
 		ft_putnbr_hexa_small(ptr->u_integer, count);
 	else if (ptr->flag == 'X')
 		ft_putnbr_hexa(ptr->u_integer, count);
@@ -74,7 +72,7 @@ void		ft_value_giver(const char **str, int *count, va_list ap)
 	if (ptr->flag == 's')
 		ptr->string = va_arg(ap, char *);
 	else if (ptr->flag == 'p')
-		ptr->string = va_arg(ap, char *);
+		ft_putadrr(ptr, ap);
 	else if (ptr->flag == 'u' || ptr->flag == 'x' || ptr->flag == 'X')
 		ptr->u_integer = va_arg(ap, int);
 	else if (ptr->flag != '%')

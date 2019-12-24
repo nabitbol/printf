@@ -8,8 +8,8 @@ int	main(void)
 	int u = 24113;
 	char *tmp = "j";
 
-	ft_printf("yooyooo %4d\n", x);
-	printf("yooyooo %4d\n", x);
+	ft_printf("yooyooo %10.*d\n", 4, x);
+	printf("yooyooo %10.4d\n", x);
 	ft_printf("yooyooo %05s\n", tmp);
 	printf("yooyooo %05s\n", tmp);
 	ft_printf("yooyooo %i\n", x);

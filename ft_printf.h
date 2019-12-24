@@ -33,7 +33,7 @@ void		print_zero(t_convert *ptr, const char **str, int *count);
 int		print_espace2(t_convert *ptr, const char **str, int len);
 
 /* precision2 */
-int	print_negatifz(t_convert *ptr, int *count, int nb_zero, int *len);
+int	print_negatifz(t_convert *ptr, int *count, int nb_zero);
 void	prec_s(t_convert *ptr, int *count);
 int	check_point(t_convert * ptr, const char **str);
 
@@ -46,7 +46,7 @@ void		ft_putchar(char c);
 void		ft_putnbr_count(long nbr, int *count);
 void		ft_putnbr_hexa(long nbr, int *count);
 void		ft_putnbr_hexa_small(long nbr, int *count);
-void		ft_putadrr(char *str, int *count);
+void		ft_putadrr(t_convert *ptr, va_list ap);
 
 /* utils3 */
 int			is_digit(char c);
