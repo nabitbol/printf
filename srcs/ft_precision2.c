@@ -12,11 +12,12 @@
 
 #include "../ft_printf.h"
 
-int	print_negatifz(t_convert *ptr, int *count, int nb_zero, int *len)
+int	print_negatifz(t_convert *ptr, int *count, int nb_zero)
 {
 	ft_putchar_count('-', count);
 	ptr->integer = -(ptr->integer);
-		len += 1;
+	if (ptr->point == 0)
+		nb_zero -= 1;
 	if (ptr->moins == 1)
 		ptr->num -=1;
 	return (nb_zero);

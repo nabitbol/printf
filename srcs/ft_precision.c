@@ -121,7 +121,7 @@ void	print_zero(t_convert *ptr, const char **str, int *count)
 	else if (**str == 'p')
 		len = counter(ptr->u_integer, 16) + 2;
 	if (ptr-> integer < 0)
-		nb_zero = print_negatifz(ptr, count, nb_zero, &len);
+		nb_zero = print_negatifz(ptr, count, nb_zero);
 	while (nb_zero - len > n)
 	{
 		ft_putchar_count('0', count);
