@@ -6,7 +6,7 @@
 /*   By: nabitbol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 18:18:11 by nabitbol          #+#    #+#             */
-/*   Updated: 2019/12/26 12:43:24 by nabitbol         ###   ########.fr       */
+/*   Updated: 2019/12/26 15:46:07 by nabitbol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int			print_espace2(t_convert *ptr, const char **str, int len)
 	else if (**str != 's')
 		len = (ptr->p > len) ? ptr->p : len;
 	if (ptr->integer < 0)
+		len += 1;
+	if (**str == '%')
 		len += 1;
 	return (len);
 }

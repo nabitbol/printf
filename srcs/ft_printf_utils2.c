@@ -6,7 +6,7 @@
 /*   By: nabitbol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 09:22:06 by nabitbol          #+#    #+#             */
-/*   Updated: 2019/12/26 12:53:49 by nabitbol         ###   ########.fr       */
+/*   Updated: 2019/12/26 16:31:55 by nabitbol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,27 @@ void		ft_putnbr_count(long int nbr, int *count)
 
 	if (nbr < 0)
 	{
-		ft_putchar('-');
-		nb = -(nbr);
-		*count += 1;
+		if (nbr == -2147483648)
+		{
+			nb = nbr;
+			ft_putstr_count("-2147483648", count);
+		}
+		else
+		{
+			ft_putchar('-');
+			nb = -(nbr);
+			*count += 1;
+		}
 	}
 	else
 		nb = nbr;
-	if (nb >= 10)
+	if (nb >= 10 && nbr != -2147483648)
 		ft_putnbr_count((nb / 10), count);
-	*count += 1;
-	ft_putchar((nb % 10) + '0');
+	if (nbr != -2147483648)
+	{
+		*count += 1;
+		ft_putchar((nb % 10) + '0');
+	}
 }
 
 void		ft_putnbr_hexa(long int nbr, int *count)

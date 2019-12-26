@@ -6,7 +6,7 @@
 /*   By: nabitbol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 11:31:24 by nabitbol          #+#    #+#             */
-/*   Updated: 2019/12/26 12:51:43 by nabitbol         ###   ########.fr       */
+/*   Updated: 2019/12/26 16:33:56 by nabitbol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		print_prec(t_convert *ptr, const char **str, int *count)
 		prec_s(ptr, count);
 	else if (ptr->point == 1 && **str != '%' && **str != 'c')
 		print_zero(ptr, str, count);
-	else if (**str == 'p')
+	if (**str == 'p')
 		ft_putstr_count("0x", count);
 }
 
@@ -109,8 +109,8 @@ void		print_zero(t_convert *ptr, const char **str, int *count)
 	n = 0;
 	len = 0;
 	nb_zero = (ptr->point == 1) ? ptr->p : ptr->num;
-	if (**str == 'c')
-		len = 1;
+	if (**str == 'c' || **str == '%')
+		len += 1;
 	else if (**str == 'd' || **str == 'i')
 		len = counter(ptr->integer, 10);
 	else if (**str == 'x' || **str == 'X')

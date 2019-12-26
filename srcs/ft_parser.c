@@ -6,7 +6,7 @@
 /*   By: nabitbol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 11:44:08 by nabitbol          #+#    #+#             */
-/*   Updated: 2019/12/26 12:51:17 by nabitbol         ###   ########.fr       */
+/*   Updated: 2019/12/26 16:10:54 by nabitbol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void		ft_value_giver(const char **str, int *count, va_list ap)
 		ptr->u_integer = va_arg(ap, int);
 	else if (ptr->flag != '%')
 		ptr->integer = va_arg(ap, int);
-	else if (ptr->flag == 's' && ptr->string == NULL)
+	if (ptr->flag == 's' && ptr->string == NULL)
 		ptr->string = "(null)";
 	print_prec(ptr, str, count);
 	if (check_point(ptr, str) == 0)
