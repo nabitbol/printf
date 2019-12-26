@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_utils6.c                                 :+:      :+:    :+:   */
+/*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nabitbol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/14 11:10:32 by nabitbol          #+#    #+#             */
-/*   Updated: 2019/12/21 18:28:11 by nabitbol         ###   ########.fr       */
+/*   Created: 2019/12/26 11:44:08 by nabitbol          #+#    #+#             */
+/*   Updated: 2019/12/26 12:51:17 by nabitbol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		negatif(t_convert *ptr, const char **str, int *count)
 	free(ptr);
 }
 
-void		ft_check_flags(t_convert *ptr, int *count)	
+void		ft_check_flags(t_convert *ptr, int *count)
 {
 	if (ptr->flag == 'c')
 		ft_putchar_count(ptr->integer, count);
@@ -45,16 +45,17 @@ void		ft_check_flags(t_convert *ptr, int *count)
 		ft_putnbr_count(ptr->integer, count);
 	else if (ptr->flag == 'u')
 		ft_putnbr_count(ptr->u_integer, count);
-	else if (ptr->flag == 'x' || (ptr->flag == 'p' && ptr->u_integer != 0))
+	else if (ptr->flag == 'x')
 		ft_putnbr_hexa_small(ptr->u_integer, count);
 	else if (ptr->flag == 'X')
 		ft_putnbr_hexa(ptr->u_integer, count);
+	else if (ptr->flag == 'p')
+		ft_putnbr_hexa_small(ptr->ulong_integer, count);
 	else if (ptr->flag == 's' && ptr->point == 0)
 		ft_putstr_count(ptr->string, count);
 	else if (ptr->flag == '%')
 		ft_putchar_count('%', count);
 }
-
 
 void		ft_value_giver(const char **str, int *count, va_list ap)
 {
@@ -62,7 +63,7 @@ void		ft_value_giver(const char **str, int *count, va_list ap)
 
 	ptr = init_convert();
 	(*str)++;
-	ft_check_prec(str, ptr, ap, count);
+	p(str, ptr, ap, count);
 	ptr->flag = **str;
 	if (ptr->num < 0)
 	{
